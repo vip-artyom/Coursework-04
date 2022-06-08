@@ -1,14 +1,15 @@
 from marshmallow import Schema, fields
 
+from project.schemas.director import DirectorSchema
+from project.schemas.genre import GenreSchema
+
 
 class MovieSchema(Schema):
-    id = fields.Int()
-    title = fields.Str()
-    description = fields.Str()
-    trailer = fields.Str()
-    year = fields.Int()
-    rating = fields.Float()
-    genre_id = fields.Int()
-    genre_name = fields.Float()
-    director_id = fields.Int()
-    director_name = fields.Float()
+    id = fields.Int(required=True, dump_only=True)
+    title = fields.Str(required=True)
+    description = fields.Str(required=True)
+    trailer = fields.Str(required=True)
+    year = fields.Int(required=True)
+    rating = fields.Float(required=True)
+    genre = fields.Nested(GenreSchema)
+    director = fields.Nested(DirectorSchema)
