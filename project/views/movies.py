@@ -16,6 +16,7 @@ class MoviesViews(Resource):
     @movie_ns.response(404, 'Movies not found')
     def get(self):
         """Get all movies"""
+
         page = request.args.get('page')
         status = request.args.get('status')
 

@@ -16,6 +16,7 @@ class UserService(BaseMixinService):
     def create(self, user_data):
 
         user = self.dao.get_user_by_email(user_data.get('email'))
+
         if user:
             raise Exception("This Username Already Exists")
 
@@ -27,8 +28,8 @@ class UserService(BaseMixinService):
     def update_password(self, data, email):
 
         user = self.get_user_by_email(email)
-        old_password = data.get('old_password')
-        new_password = data.get('new_password')
+        old_password = data.get('password_old')
+        new_password = data.get('password_new')
 
         if None in [old_password, new_password]:
             raise ItemNotFound
@@ -39,12 +40,12 @@ class UserService(BaseMixinService):
         data = {
             'password': hash_password(new_password)
         }
-        self.dao.update_by_email(data, email)
+        self.dao.update_user_by_email(data, email)
 
     def update_data(self, data, email):
         try:
             if self.get_user_by_email(email):
-                if 'password' in data.keys() and 'email' in data.keys():
+                if 'email' in data.keys():
                     self.dao.update_user_by_email(data, email)
             else:
                 raise ItemNotFound

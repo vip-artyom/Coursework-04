@@ -16,6 +16,7 @@ class UserView(Resource):
     @user_ns.response(404, 'User not Found')
     def get(self):
         try:
+            print(request.headers['Authorization'])
             req_data = request.headers['Authorization']
             token = req_data.split("Bearer ")[-1]
             email = auth_service.get_user_email_from_token(token)
@@ -34,7 +35,6 @@ class UserView(Resource):
             req_data = request.headers['Authorization']
             token = req_data.split("Bearer ")[-1]
             email = auth_service.get_user_email_from_token(token)
-
             updated_data = user_schema.dump(request.json)
             user_service.update_data(updated_data, email)
             return "", 200
@@ -50,12 +50,13 @@ class PasswordView(Resource):
     @user_ns.response(404, 'User not Found')
     def put(self):
         try:
+
             req_data = request.headers['Authorization']
             token = req_data.split("Bearer ")[-1]
             email = auth_service.get_user_email_from_token(token)
 
-            passwords = request.json.get('password')
-            user_service.update_password(passwords, email)
+            data = request.json
+            user_service.update_password(data, email)
             return "", 200
         except ItemNotFound:
             abort(404, 'User not found')

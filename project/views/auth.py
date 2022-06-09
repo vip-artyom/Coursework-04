@@ -52,7 +52,7 @@ class AuthView(Resource):
         try:
             refresh_token = request.json.get('refresh_token')
             if not refresh_token:
-                abort(404, 'Token not found')
+                abort(404, 'Refresh token not found')
 
             tokens = auth_service.approve_refresh_token(refresh_token)
             return tokens, 201

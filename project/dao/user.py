@@ -22,8 +22,8 @@ class UserDAO(BaseMixinDAO):
         return user
 
     def update_user_by_email(self, user_data, email):
-        find_user = self.get_user_by_email(email)
-        updated_user = find_user.update(user_data)
+        user = self.session.query(User).filter(User.email == email)
+        user.update(user_data)
         self.session.commit()
         self.session.close()
         return "", 200
