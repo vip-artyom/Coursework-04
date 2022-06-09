@@ -1,6 +1,6 @@
-from project.config import DevelopmentConfig
-from project.server import create_app
-from project.setup_db import db
+from project import DevelopmentConfig, create_app, db
+from project.dao.models import director, genre, movie, user
+
 
 app = create_app(DevelopmentConfig)
 

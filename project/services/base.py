@@ -1,6 +1,18 @@
-from sqlalchemy.orm.scoping import scoped_session
+from project.exceptions import ItemNotFound
 
 
-class BaseService:
-    def __init__(self, session: scoped_session):
-        self._db_session = session
+class BaseMixinService:
+    def __init__(self, dao):
+        self.dao = dao
+
+    def get_one(self, eid):
+        entity = self.dao.get_one(eid)
+        if not entity:
+            raise ItemNotFound
+        return entity
+
+    def get_all(self, filters):
+        entity = self.dao.get_all(filters)
+        if not entity:
+            raise ItemNotFound
+        return entity

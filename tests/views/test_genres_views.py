@@ -22,7 +22,7 @@ class TestGenresView:
 
 
 class TestGenreView:
-    url = "/genres/{genre_id}"
+    url = "/genres/{genre_id}/"
 
     @pytest.fixture
     def genre(self, db):

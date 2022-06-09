@@ -1,27 +1,43 @@
-from flask_restx import abort, Namespace, Resource
+from flask import request
+from flask_restx import Resource, Namespace, abort
 
 from project.exceptions import ItemNotFound
-from project.services.movies_service import MoviesService
-from project.setup_db import db
+from project.container import movie_service
+from project.schemas import MovieSchema
 
-movies_ns = Namespace("movies")
+movie_ns = Namespace('movies')
+movies_schema = MovieSchema(many=True)
+movie_schema = MovieSchema()
 
 
-@movies_ns.route("/")
-class MoviesView(Resource):
-    @movies_ns.response(200, "OK")
+@movie_ns.route('/')
+class MoviesViews(Resource):
+    @movie_ns.response(200, 'OK')
+    @movie_ns.response(404, 'Movies not found')
     def get(self):
-        """Get all Movies"""
-        return MoviesService(db.session).get_all_movies()
+        """Get all movies"""
+        page = request.args.get('page')
+        status = request.args.get('status')
 
-
-@movies_ns.route("/<int:movie_id>")
-class MovieView(Resource):
-    @movies_ns.response(200, "OK")
-    @movies_ns.response(404, "Movie not found")
-    def get(self, movie_id: int):
-        """Get Movie by id"""
+        filters = {
+            "page": page,
+            "status": status
+        }
         try:
-            return MoviesService(db.session).get_item_by_id(movie_id)
+            all_movies = movie_service.get_all(filters)
+            return movies_schema.dump(all_movies), 200
         except ItemNotFound:
-            abort(404, message="Movie not found")
+            abort(404, message=f'Movies not found')
+
+
+@movie_ns.route('/<int:mid>/')
+class MovieView(Resource):
+    @movie_ns.response(200, 'OK')
+    @movie_ns.response(404, 'Movie not found')
+    def get(self, mid):
+        """Get movie by id"""
+        try:
+            movie = movie_service.get_one(mid)
+            return movie_schema.dump(movie), 200
+        except ItemNotFound:
+            abort(404, f'Movie with id={mid} not found')

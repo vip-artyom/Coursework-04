@@ -9,6 +9,7 @@ class BaseConfig:
     JSON_AS_ASCII = False
 
     ITEMS_PER_PAGE = 12
+    JWT_ALGORITHM = 'HS256'
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 

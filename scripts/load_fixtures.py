@@ -1,12 +1,6 @@
 from sqlalchemy.exc import IntegrityError
-
-from project.config import DevelopmentConfig
-from project.dao.models.director import Director
-from project.dao.models.genre import Genre
-from project.dao.models.movie import Movie
-from project.server import create_app
-from project.setup_db import db
-from project.utils import read_json
+from project import DevelopmentConfig, create_app, db, read_json
+from project.dao.models import Director, Genre, Movie
 
 app = create_app(DevelopmentConfig)
 
@@ -23,7 +17,8 @@ with app.app_context():
         db.session.add(Movie(**movie))
 
     try:
-        print(Movie, Genre, Director)
         db.session.commit()
+        db.session.close()
+
     except IntegrityError:
         print("Fixtures already loaded")

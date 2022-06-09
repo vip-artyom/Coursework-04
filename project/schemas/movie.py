@@ -1,7 +1,5 @@
 from marshmallow import Schema, fields
-
-from project.schemas.director import DirectorSchema
-from project.schemas.genre import GenreSchema
+from project.schemas import DirectorSchema, GenreSchema
 
 
 class MovieSchema(Schema):
