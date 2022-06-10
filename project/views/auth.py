@@ -11,6 +11,7 @@ auth_ns = Namespace('auth')
 class AuthView(Resource):
     @auth_ns.response(201, 'OK')
     @auth_ns.response(404, 'Not found')
+    @auth_ns.response(400, 'UserAlreadyExists')
     def post(self):
         data = {
             'email': request.json.get('email'),

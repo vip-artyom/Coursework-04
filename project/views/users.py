@@ -5,6 +5,7 @@ from project.container import user_service, auth_service
 from project.exceptions import ItemNotFound
 
 user_ns = Namespace('user')
+
 user_schema = UserSchema()
 users_schema = UserSchema(many=True)
 
@@ -16,7 +17,6 @@ class UserView(Resource):
     @user_ns.response(404, 'User not Found')
     def get(self):
         try:
-            print(request.headers['Authorization'])
             req_data = request.headers['Authorization']
             token = req_data.split("Bearer ")[-1]
             email = auth_service.get_user_email_from_token(token)
@@ -30,11 +30,11 @@ class UserView(Resource):
     @user_ns.response(200, 'OK')
     @user_ns.response(404, 'User not Found')
     def patch(self):
-
         try:
             req_data = request.headers['Authorization']
             token = req_data.split("Bearer ")[-1]
             email = auth_service.get_user_email_from_token(token)
+
             updated_data = user_schema.dump(request.json)
             user_service.update_data(updated_data, email)
             return "", 200
@@ -50,7 +50,6 @@ class PasswordView(Resource):
     @user_ns.response(404, 'User not Found')
     def put(self):
         try:
-
             req_data = request.headers['Authorization']
             token = req_data.split("Bearer ")[-1]
             email = auth_service.get_user_email_from_token(token)

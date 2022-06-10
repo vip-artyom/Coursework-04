@@ -5,6 +5,7 @@ from project.container import director_service
 from project.schemas import DirectorSchema
 
 director_ns = Namespace('directors')
+
 directors_schema = DirectorSchema(many=True)
 director_schema = DirectorSchema()
 

@@ -6,6 +6,7 @@ from project.container import movie_service
 from project.schemas import MovieSchema
 
 movie_ns = Namespace('movies')
+
 movies_schema = MovieSchema(many=True)
 movie_schema = MovieSchema()
 

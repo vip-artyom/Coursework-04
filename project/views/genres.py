@@ -6,6 +6,7 @@ from project.container import genre_service
 from project.schemas import GenreSchema
 
 genre_ns = Namespace('genres')
+
 genres_schema = GenreSchema(many=True)
 genre_schema = GenreSchema()
 
@@ -16,6 +17,7 @@ class GenresViews(Resource):
     @genre_ns.response(404, 'Genres not found')
     def get(self):
         """Get all genres"""
+
         page = request.args.get('page')
         status = request.args.get('status')
 
