@@ -19,14 +19,12 @@ class BaseMixinDAO:
 
         entity = self.session.query(self.model)
 
+        if filters["status"] == "new":
+            entity = entity.order_by(desc(self.model.year))
+
         if filters["page"] is not None:
             entity = entity.limit(current_app.config.get('ITEMS_PER_PAGE')).\
                 offset(int(filters["page"]) * current_app.config.get('ITEMS_PER_PAGE')
                        - current_app.config.get('ITEMS_PER_PAGE'))
 
-        elif filters["status"] == "new":
-            entity = entity.order_by(desc(self.model.year))
-            return entity.all()
-        else:
-            entity = self.session.query(self.model)
         return entity.all()

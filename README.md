@@ -1,47 +1,13 @@
-# Исходный код для курсовой работы №3
+## Coursework 04
 
-## Описание проекта
-- Установка зависимостей
-```shell
-pip install -r requirements.txt
-```
-
-- Создание моделей (очистит БД и создаст все модели, указанные в импорте)
-```shell
-python create_tables
-```
-
-- Загрузка данных в базу
-```shell
-python load_fixture
-```
-Скрпит читает файл fixtures.json и загружает данные в базу. Если данные уже загружены - выводит соответсвующее сообщение. 
-
-## Запуск проекта
-
-### Bash (Linux/MACOS)
-```shell
-export FLASK_APP=run.py
-export FLASK_ENV='development'
-flask run
-```
-
-### CMD (Windows)
-```shell
-set FLASK_APP=run.py
-set FLASK_ENV=development
-flask run
-```
-
-### PowerShell (Windows)
-```shell
-$env:FLASK_APP = "run"
-$env:FLASK_ENV = "development"
-flask run
-```
-
-## Запуск тестов
-```shell
-pytest .
-```
+1. /auth/register - POST
+2. /auth/login - POST, PUT
+3. /user/ - GET, PATCH
+4. /user/password - PUT
+5. /movies/ - GET (params: status, page)
+6. /movies/<mid> - GET
+7. /genres/ - GET (params: page)
+8. /genres/<gid> - GET
+9. /directors/ - GET (params: page)
+10. /directors/<did> - GET
 
