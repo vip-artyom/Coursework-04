@@ -1,6 +1,8 @@
 import pytest
 
 from project.config import TestingConfig
+from project.dao import GenreDAO
+from project.dao.models import Genre
 from project.server import create_app
 from project.setup_db import db as database
 
